@@ -18,21 +18,22 @@ window.addEventListener('DOMContentLoaded', function(){
                 dateNow = new Date().getTime(),
                 timeRemaining = (dateStop - dateNow) / 1000, 
                 seconds = Math.floor(timeRemaining % 60),
+                secondsZero = checkTime(seconds),
                 minutes = Math.floor((timeRemaining / 60) % 60),
                 minutesZero = checkTime(minutes),
-                hours = Math.floor(timeRemaining / 60 / 60) % 24,
-                hoursZero = checkTime(hours),
-                days = Math.floor(timeRemaining / 60 / 60 / 24);
-                return {timeRemaining, days, hoursZero, minutesZero, seconds};
+                hours = Math.floor(timeRemaining / 60 / 60),
+                hoursZero = checkTime(hours);
+               //days = Math.floor(timeRemaining / 60 / 60 / 24);
+                return {timeRemaining, hoursZero, minutesZero, secondsZero};
         }
         
         const updateCLock = () => {
            let timer = getTimeRemaining();
-           timerDays.textContent = timer.days;
+           
            timerHours.textContent = timer.hoursZero;
           
            timerMinutes.textContent = timer.minutesZero;
-           timerSeconds.textContent = timer.seconds;
+           timerSeconds.textContent = timer.secondsZero;
            
            if(timer.timeRemaining > 0){
             setInterval(updateCLock, 1000)
@@ -45,7 +46,6 @@ window.addEventListener('DOMContentLoaded', function(){
         }
         updateCLock();
     }
-    
     countTimer('01 october 2019');
     
     //menu
@@ -53,21 +53,25 @@ window.addEventListener('DOMContentLoaded', function(){
         const btnMenu = document.querySelector('.menu'),
               closeBtn = document.querySelector('.close-btn'),
               menu = document.querySelector('menu'),
-              menuItems = menu.querySelectorAll('ul>li');
-
+              body = document.querySelector('body'),
+              menuItems = menu.querySelectorAll('ul>li'),
+              offset = menu.offsetLeft;
+             
         const handlerMenu = () => {
-            menu.classList.toggle('active-menu');
+            menu.classList.add('active-menu');
         };
-
-        btnMenu.addEventListener('click', handlerMenu);
-
-        closeBtn.addEventListener('click', handlerMenu);
-
-        for (let i = 0; i < menuItems.length; i++){
-            menuItems[i].addEventListener('click', handlerMenu);
+        const closeMenu = () => {
+            menu.classList.remove('active-menu');
         };
-
-        menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
+        body.addEventListener('click', (e)=> {
+            let target = e.target;
+            target = target.closest('.menu');
+            if(target == btnMenu){
+                handlerMenu();
+            } else {
+                closeMenu();
+            } 
+         })
     };
     toggleMenu();
 
@@ -101,7 +105,52 @@ window.addEventListener('DOMContentLoaded', function(){
             popup.style.display = 'none';
             popupContent.style.left = '-100%';
         });
-        console.log(document.documentElement.clientWidth)
+
+        popup.addEventListener('click', (event) => {
+            let target = event.target;
+            if(target.classList.contains('popup-close')){
+                popup.style.display = 'none';
+                popupContent.style.left = '-100%';
+            } else {
+                target = target.closest('.popup-content');
+                if(!target){
+                    popup.style.display = 'none';
+                    popupContent.style.left = '-100%';
+                 }
+            }
+           
+        })
     }
     togglePopup();
+
+    //tabs
+    const tabs = () => {
+        const tabHeader = document.querySelector('.service-header'),
+            tab = tabHeader.querySelectorAll('.service-header-tab'),
+            tabContent = document.querySelectorAll('.service-tab');
+
+        const toggleTabContent = (index) => {
+            for(let i = 0; i < tabContent.length; i++){
+                if(index === i){
+                    tab[i].classList.add('active');
+                    tabContent[i].classList.remove('d-none');
+                } else {
+                    tab[i].classList.remove('active');
+                    tabContent[i].classList.add('d-none');
+                }
+            }
+        };
+            tabHeader.addEventListener('click', (event) => {
+                let target = event.target;
+                    target = target.closest('.service-header-tab');
+                    if(target){
+                        tab.forEach((item, i) => {
+                            if(item === target){
+                               toggleTabContent(i); 
+                            }
+                        });
+                    }
+            });
+    }
+    tabs();
 });
