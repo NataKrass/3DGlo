@@ -253,26 +253,17 @@ window.addEventListener('DOMContentLoaded', function(){
 
     //team
     const commandPhoto = document.querySelectorAll('.command__photo');
-    //первый вариант
-    function changeImage(image){
-        event.target.src = image;
-    }
-
+   
     commandPhoto.forEach((elem) => {
-        let src = event.target.src;
-        let srcNew = elem.dataset.img;
-        elem.addEventListener('mouseover', changeImage(srcNew));//кусочек первого
-       
-        elem.addEventListener('mouseout', changeImage(src));//от первого
-        //второй вариант
-        elem.addEventListener('mouseenter', (e) => {
-             let srcNew = event.target.dataset.img;
-           event.target.src = srcNew;
-           
+        let src = elem.src;
+
+        elem.addEventListener('mouseenter', (event) => {
+           let srcNew = event.target.dataset.img;
+           event.target.src = srcNew
          })
         
-         elem.addEventListener('mouseleave', (e) => {
-            event.target.src = event.target.src;
+         elem.addEventListener('mouseleave', (event) => {
+            event.target.src = src;
             console.log(event.target.src);
           })
     });
