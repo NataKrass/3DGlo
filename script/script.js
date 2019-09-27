@@ -173,7 +173,6 @@ window.addEventListener('DOMContentLoaded', function(){
     
         let  dot = document.querySelectorAll('.dot');
         dot[0].classList.add('dot-active');
-        console.log(dot[0])
         const prevSlide = (elem, index, strClass) => {
                elem[index].classList.remove(strClass);
         };
@@ -251,4 +250,40 @@ window.addEventListener('DOMContentLoaded', function(){
      
     }
     slider();
+
+    //team
+    const commandPhoto = document.querySelectorAll('.command__photo');
+    //первый вариант
+    function changeImage(image){
+        event.target.src = image;
+    }
+
+    commandPhoto.forEach((elem) => {
+        let src = event.target.src;
+        let srcNew = elem.dataset.img;
+        elem.addEventListener('mouseover', changeImage(srcNew));//кусочек первого
+       
+        elem.addEventListener('mouseout', changeImage(src));//от первого
+        //второй вариант
+        elem.addEventListener('mouseenter', (e) => {
+             let srcNew = event.target.dataset.img;
+           event.target.src = srcNew;
+           
+         })
+        
+         elem.addEventListener('mouseleave', (e) => {
+            event.target.src = event.target.src;
+            console.log(event.target.src);
+          })
+    });
+
+    //calculator
+    let inputsNumber = document.querySelectorAll(".calc-item");
+    inputsNumber.forEach((e) => {
+        e.addEventListener('input', () => {
+        e.value = e.value.replace(/[^\d.]/g, '');
+        })
+    })
 });
+
+//05006352577
