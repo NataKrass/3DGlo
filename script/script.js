@@ -296,12 +296,10 @@ window.addEventListener('DOMContentLoaded', function(){
 
             if(calcDay.value && calcDay.value < 5){
                 dayValue *= 2;
-            } else if(calcDay.value && calcDay < 10){
+            } else if(calcDay.value && calcDay.value < 10){
                 dayValue *= 1.5;
-                
             }
-            console.log(dayValue)
-
+  
             if(typeValue && squareValue) {
                 total = price * typeValue * squareValue * countValue * dayValue;
             } 
@@ -321,7 +319,78 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
     calc(100);
+        
+    //send ajax-form
+    let formHeader = document.getElementById('form1'),
+       formFooter = document.getElementById('form2'),
+       formModal = document.getElementById('form3');
+ 
+    const sendForm = (form) => {
+        const errorMessage = "Ошибка",
+         loadMessage = "Загрузка...",
+         successMessage = "Данные успешно отправлены!",
+        
+         statusMessage = document.createElement('div');
+         statusMessage.style.cssText = 'font-size: 2rem;';
+         statusMessage.classList.add('form-text');
+        
+         form.addEventListener('submit', (event) => {
+             event.preventDefault();
+             form.appendChild(statusMessage);
+             
+             const request = new XMLHttpRequest();
 
+             request.addEventListener('readystatechange', () => {
+                statusMessage.textContent = loadMessage;
+                if(request.readyState !== 4) {
+                    return;
+                }
+                if (request.status === 200){
+                    statusMessage.textContent = successMessage;
+                } else {
+                    statusMessage.textContent = errorMessage;
+                }
+             });
+             request.open('POST', './server.php');
+             request.setRequestHeader('Conent-Type', 'application/json');
+             const formData = new FormData(form);
+             let body = {};
+             
+             for(let val of formData.entries()){
+                 body[val[0]] = val[1];
+             }
+             console.log(body)
+             request.send(JSON.stringify(body));
+             const inputs = document.querySelectorAll('input');
+             inputs.forEach((elem) => elem.value = '');
+           
+        });
+    };
+    sendForm(formHeader);
+    sendForm(formFooter);
+    sendForm(formModal);
+
+    //validation
+    let formPhone = document.querySelectorAll('.form-phone');
+    formPhone.forEach((e) => {
+        e.addEventListener('input', () => {
+        e.value = e.value.replace(/[^0-9+]/, '');
+        })
+    })
+
+    let formName = document.querySelectorAll('.form-name');
+    formName.forEach((e) => {
+        e.addEventListener('input', () => {
+        e.value = e.value.replace(/[^А-Яа-яЁё ]/, '');
+        })
+    });
+    let formMessage = document.querySelector('#form2-message')
+    formMessage.addEventListener('input', () => {
+        
+        formMessage.value = formMessage.value.replace(/[^А-Яа-яЁё ]/, '');
+     })
+    
+    
 });
 
 //05006352577
