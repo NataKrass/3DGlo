@@ -361,10 +361,11 @@ window.addEventListener('DOMContentLoaded', function(){
                 }
                 console.log(body)
                 request.send(JSON.stringify(body));
-             });
-            
+                
              const inputs = document.querySelectorAll('input');
              inputs.forEach((elem) => elem.value = '');
+             });
+            
            
         });
     };
