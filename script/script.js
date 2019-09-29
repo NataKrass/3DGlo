@@ -261,9 +261,8 @@ window.addEventListener('DOMContentLoaded', function(){
            event.target.src = srcNew;
         })
         
-         elem.addEventListener('mouseleave', (event) => {
+        elem.addEventListener('mouseleave', (event) => {
             event.target.src = src;
-            console.log(event.target.src);
         })
     });
 
@@ -322,8 +321,8 @@ window.addEventListener('DOMContentLoaded', function(){
         
     //send ajax-form
     let formHeader = document.getElementById('form1'),
-       formFooter = document.getElementById('form2'),
-       formModal = document.getElementById('form3');
+        formFooter = document.getElementById('form2'),
+        formModal = document.getElementById('form3');
  
     const sendForm = (form) => {
         const errorMessage = "Ошибка",
@@ -338,29 +337,32 @@ window.addEventListener('DOMContentLoaded', function(){
              event.preventDefault();
              form.appendChild(statusMessage);
              
-             const request = new XMLHttpRequest();
+             return new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
 
-             request.addEventListener('readystatechange', () => {
-                statusMessage.textContent = loadMessage;
-                if(request.readyState !== 4) {
-                    return;
+                request.addEventListener('readystatechange', () => {
+                   statusMessage.textContent = loadMessage;
+                   if(request.readyState !== 4) {
+                       return;
+                   }
+                   if (request.status === 200){
+                       statusMessage.textContent = successMessage;
+                   } else {
+                       statusMessage.textContent = errorMessage;
+                   }
+                });
+                request.open('POST', './server.php');
+                request.setRequestHeader('Conent-Type', 'application/json');
+                const formData = new FormData(form);
+                let body = {};
+                
+                for(let val of formData.entries()){
+                    body[val[0]] = val[1];
                 }
-                if (request.status === 200){
-                    statusMessage.textContent = successMessage;
-                } else {
-                    statusMessage.textContent = errorMessage;
-                }
+                console.log(body)
+                request.send(JSON.stringify(body));
              });
-             request.open('POST', './server.php');
-             request.setRequestHeader('Conent-Type', 'application/json');
-             const formData = new FormData(form);
-             let body = {};
-             
-             for(let val of formData.entries()){
-                 body[val[0]] = val[1];
-             }
-             console.log(body)
-             request.send(JSON.stringify(body));
+            
              const inputs = document.querySelectorAll('input');
              inputs.forEach((elem) => elem.value = '');
            
@@ -378,15 +380,14 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     })
 
-    let formName = document.querySelectorAll('.form-name');
+    let formName = document.querySelectorAll('.form-name'),
+        formMessage = document.querySelector('#form2-message');
     formName.forEach((e) => {
         e.addEventListener('input', () => {
         e.value = e.value.replace(/[^А-Яа-яЁё ]/, '');
         })
     });
-    let formMessage = document.querySelector('#form2-message')
     formMessage.addEventListener('input', () => {
-        
         formMessage.value = formMessage.value.replace(/[^А-Яа-яЁё ]/, '');
      })
     
