@@ -1,7 +1,7 @@
 'use strict';
 
 import calc from './modules/calc';
-import countTimer from './src/modules/countTimer';
+import countTimer from './modules/countTimer';
 import sendForm from './modules/sendForm';
 import slider from './modules/slider';
 import tabs from './modules/tabs';
