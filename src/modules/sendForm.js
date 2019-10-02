@@ -20,11 +20,13 @@ const sendForm = (form) => {
                  throw new Error('status network not 200');
              }
                 statusMessage.textContent = successMessage;
+                const inputs = document.querySelectorAll('input');
+                inputs.forEach((elem) => elem.value = '');
             })
             .catch ((error) => {
                 statusMessage.textContent = errorMessage;
                 console.log(error);
-            })
+            })     
     });
 
     const postData = (formData) => {
@@ -36,6 +38,8 @@ const sendForm = (form) => {
             body: formData
         });
     };  
+
+    
 };
 
 export default sendForm;

@@ -5,7 +5,7 @@ const togglePopup = () => {
         popupClose = document.querySelector('.popup-close');
     
     popupContent.style.transition = '1s';
-    popupContent.style.left = '-100%';
+    // popupContent.style.left = '-100%';
 
     function animation(){
         popupContent.style.left = '38%';
@@ -15,7 +15,7 @@ const togglePopup = () => {
         elem.addEventListener('click', () => {
             popup.style.display = 'block';
             if(document.documentElement.clientWidth > 576) {
-                setInterval(animation, 100);
+                animation();
             } else {
                 popupContent.style.left = '14%';
             }
@@ -45,3 +45,5 @@ const togglePopup = () => {
 };
 
 export default togglePopup;
+
+

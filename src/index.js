@@ -11,7 +11,7 @@ import togglePopup from './modules/togglePopup';
 import validation from './modules/validation';
 
     //timer
-    countTimer('01 october 2019');
+    countTimer('10 october 2019');
     
     //menu
     toggleMenu();
