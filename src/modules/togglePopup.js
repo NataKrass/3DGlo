@@ -44,6 +44,6 @@ const togglePopup = () => {
     })
 };
 
-export default togglePopup;
+togglePopup();
 
 

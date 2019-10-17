@@ -94,4 +94,4 @@ const slider = () => {
     startSlide(5000); 
 };
 
-export default slider;
+slider();

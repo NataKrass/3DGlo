@@ -1,6 +1,5 @@
 const countTimer = (deadline) =>{
-    let timerDays = document.querySelector('#timer-days'),
-        timerHours = document.querySelector('#timer-hours'),
+    let timerHours = document.querySelector('#timer-hours'),
         timerMinutes = document.querySelector('#timer-minutes'),
         timerSeconds = document.querySelector('#timer-seconds');
     function checkTime(i) {
@@ -34,7 +33,7 @@ const countTimer = (deadline) =>{
        if(timer.timeRemaining > 0){
         setInterval(updateCLock, 1000)
        } else {
-        timerDays.textContent = '0';
+       
         timerHours.textContent = '00';
         timerMinutes.textContent = '00';
         timerSeconds.textContent = '00';
@@ -43,4 +42,4 @@ const countTimer = (deadline) =>{
     updateCLock();
 };
 
-export default countTimer;
+countTimer('10 december 2019');

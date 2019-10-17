@@ -19,4 +19,4 @@ const validation = () => {
     
 };
 
-export default validation;
+validation();

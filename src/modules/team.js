@@ -14,5 +14,5 @@ const team = () => {
     });
 }; 
 
-export default team;
+team();
 

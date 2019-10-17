@@ -41,5 +41,5 @@ const sendForm = (form) => {
 
     
 };
-
-export default sendForm;
+const form1 = document.getElementById('form1');
+sendForm(form1);

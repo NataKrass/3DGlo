@@ -1,14 +1,15 @@
 'use strict';
 
-import calc from './modules/calc';
-import countTimer from './modules/countTimer';
-import sendForm from './modules/sendForm';
-import slider from './modules/slider';
-import tabs from './modules/tabs';
-import team from './modules/team';
-import toggleMenu from './modules/toggleMenu';
-import togglePopup from './modules/togglePopup';
-import validation from './modules/validation';
+import calc from './modules/calc.js';
+import countTimer from './modules/countTimer.js';
+import sendForm from './modules/sendForm.js';
+import slider from './modules/slider.js';
+import sliders from './modules/sliders.js';
+import tabs from './modules/tabs.js';
+import team from './modules/team.js';
+import toggleMenu from './modules/toggleMenu.js';
+import togglePopup from './modules/togglePopup.js';
+import validation from './modules/validation.js';
 
     //timer
     countTimer('10 october 2019');
@@ -24,7 +25,10 @@ import validation from './modules/validation';
 
     //slider
     slider();
-
+    
+   //slider
+   sliders();
+   
     //team
     team();
 

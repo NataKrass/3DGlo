@@ -27,4 +27,4 @@ const tabs = () => {
         });
 };
 
-export default tabs;
+tabs();
